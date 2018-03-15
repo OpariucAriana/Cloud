@@ -12,6 +12,16 @@ insertBook = function(bookName){
   });
 }
 
+insertBookWithId = function(bookId, bookName){
+  db.run(`INSERT INTO books(rowid,name) VALUES(?,?)`, [bookId, bookName], function(err) {
+    if (err) {
+      return console.log(err.message);
+    }
+  // get the last insert id
+  console.log('A row has been inserted with name '+ bookName);
+  });
+}
+
 updateBook = function(bookId, bookName){
   data = [bookName, bookId];
   let sql = "UPDATE books set name=? where rowid=?";
@@ -49,6 +59,6 @@ exports.updateInsertBook = function(bookId, bookName){
       }
       return row
       ? updateBook(bookId, bookName)
-      : insertBook(bookName);
+      : insertBookWithId(bookId, bookName);
     });
 }

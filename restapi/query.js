@@ -10,7 +10,7 @@ exports.getAllBooks = function() {
 	});
 }
 
-exports.getBook = function(argument) {
+exports.getBook = function(argument, fn) {
  	let sql = `SELECT rowid AS id, name FROM books
            WHERE rowid  = ?`;
 	let bookId = argument;
@@ -18,13 +18,21 @@ exports.getBook = function(argument) {
 // first row only
 	db.get(sql, [bookId], (err, row) => {
 		if (err) {
-			return console.error(err.message);
+			fn(400);
+            return
 		}
-		return row
-		? console.log(row.name)
-		: console.log(`No playlist found with the id ${bookId}`);
+        console.log(row)
+        if (row != undefined)
+        {
+            finalData = row.name;
+            fn(finalData);
+            return;
+        }
+        fn(404);
+        return
 	});
 }
+
 
 /*getAllBooks();
 getBook(2);*/

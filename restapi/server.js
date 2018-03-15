@@ -51,7 +51,11 @@ app.get('/books', function (req, res) {
 });
 
 app.get('/books/:id', function (req, res) {
-    res.send(query.getBook(req.params.id));
+  query.getBook(req.params.id, x = function(response)
+{
+    res.send(response);
+
+});
 });
 
 app.listen(3000, function () {
